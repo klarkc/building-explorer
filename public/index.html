@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>WebVR College Explorer</title>
+<meta name="author" content="Paulo Filho">
+<meta name="description" content="WebVR College Explorer">
+<link rel="stylesheet" href="css/default.css" type="text/css" />
+<script src="js/aframe.min.js"></script>
+<script src="js/aframe-extras.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/room-observer.js"></script>
+</head>
+<body>
+<a-scene physics="debug: false" stats antialias="true" inspector="url: js/aframe-inspector.min.js"> <!-- ctrl + alt + i -->
+
+	<!-- Assets -->
+	<a-assets>
+		<a-asset-item id="ai-college" src="models/college.dae">
+		<img id="ai-sky" src="img/sky.jpg">
+		<img id="ai-floor" src="img/floor.jpeg">
+	</a-assets>
+
+	<!-- SCENE -->
+	<!-- Floor -->
+	<a-entity position="0 0 0" rotation="0 0 0" scale="1.3 1 1" visible="true" static-body geometry="depth:120;width:165" material="shader: flat; side: double; src: #ai-floor;"></a-entity>
+
+	<!-- College building (Block #2) -->
+	<a-collada-model src="#ai-college" position="-85.50 0 22" scale="2.5 2.5 2.5"></a-collada-model>
+
+	<!-- Individual rooms'/halls' signs (WIP) -->
+	<a-entity class="point-of-interest" position="-16.45 4.35 10.5" rotation="0 90 0" opacity="0.0" visible="true" geometry="depth:0.2;height:8.7;width:4.8;primitive:box" id="room1" data-uroom="2.1" data-state="none" college-room></a-entity>
+	<a-image position="-16.32 6.82 10.61" rotation="0 90 0" scale="4 4 4" src="img/room2-1.png"></a-image>
+
+	<!-- Collision (Test) -->
+	<a-box id="ramp" color="#39BB82" width="1" height="10" depth="18.86796" position="-25.29 3.02 -17.43" rotation="23 0 0" static-body="sphereRadius:NaN" material="color:#39BB82" geometry="primitive:box;width:7.5;height:0.4;depth:13" scale="1 1 1" visible="false"></a-box> <!-- Actual ramp! -->
+	<a-box id="ramp-2" color="#39BB82" width="1" height="10" depth="18.86796" position="-25.31 1 -18.25" rotation="0 0 0" static-body="sphereRadius:NaN" material="color:#39BB82" geometry="primitive:box;width:7.5;height:1;depth:10" scale="1 1 1" visible="false"></a-box>
+	<a-box id="ramp-3" color="#39BB82" width="1" height="10" depth="18.86796" position="-25.31 2 -19.54" rotation="0 0 0" static-body="sphereRadius:NaN" material="color:#39BB82" geometry="primitive:box;width:7.5;height:1;depth:7.5" scale="1 1 1" visible="false"></a-box>
+	<a-box id="ramp-4" color="#39BB82" width="1" height="10" depth="18.86796" position="-25.31 2.96 -20.7" rotation="0 0 0" static-body="sphereRadius:NaN" material="color:#39BB82" geometry="primitive:box;width:7.5;height:1;depth:5.2" scale="1 1 1" visible="false"></a-box>
+	<a-box id="ramp-5" color="#39BB82" width="1" height="10" depth="18.86796" position="-25.31 3.95 -21.79" rotation="0 0 0" static-body="sphereRadius:NaN" material="color:#39BB82" geometry="primitive:box;width:7.5;height:1;depth:3" scale="1 1 1" visible="false"></a-box>
+	
+	<!-- Lighting and sky -->
+	<a-light id="ambientlight" type="ambient" color="#bbb"></a-light>
+	<a-light id="directionallight1" color="#ccc" position="0 30 0" distance="100" intensity="0.4" type="point"></a-light>
+	<a-light id="directionallight2" color="#ccc" position="3 10 -10" distance="50" intensity="0.4" type="point"></a-light>
+	<a-sky src="#ai-sky" radius="5000"></a-sky>
+
+	<!-- Camera & movement -->
+	<a-entity id="playerCamera" camera="userHeight: 4;"
+	universal-controls="movementAcceleration: 100;"
+	kinematic-body="height: 4;"
+	jump-ability="distance: 5"
+	position="0 0 36.18">
+	<a-entity id="cameraCursor" cursor="fuse: false; max-distance: 200" raycaster="objects: .point-of-interest; recursive: true" camera-control="notificationEl: notification-popup; rayLength: 4.0" geometry="primitive: sphere; radius:0.01;" material="color: red; opacity: 1;" position="0 0 -0.69"></a-entity>
+	</a-entity>
+</a-scene>
+<!-- POPUP (WIP; miscellaneous) -->
+<div id="notification-popup" class="notification"><div class="inlineb half"><div class="title">SALA 2.1</div></div><div class="inlineb half text-right"><div class="close-btn"></div></div>
+<div><div class="label">Horários</div>
+<ul class="schedule">
+<li>UNIGRAN - 19:10 às 22:30.</li>
+<li>ANGLO - 19:10 às 22:30.</li>
+</ul>
+</div>
+<div class="info">Sala de aula regular. Oferece aulas para a escola ANGLO pela manhã, e para a UNIGRAN no período noturno e vespertino.</div></div>
+ </body>
+</html>
